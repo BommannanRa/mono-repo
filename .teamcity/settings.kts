@@ -2,7 +2,7 @@ import jetbrains.buildServer.configs.kotlin.*
 import jetbrains.buildServer.configs.kotlin.buildFeatures.perfmon
 import jetbrains.buildServer.configs.kotlin.buildSteps.nuGetInstaller
 import jetbrains.buildServer.configs.kotlin.triggers.vcs
-
+import jetbrains.buildServer.configs.kotlin.vcs.GitVcsRoot
 /*
 The settings script is an entry point for defining a TeamCity
 project hierarchy. The script should contain a single call to the
@@ -28,7 +28,7 @@ To debug in IntelliJ Idea, open the 'Maven Projects' tool window (View
 version = "2022.10"
 
 project {
-
+    vcsRoot(SettingsForProject)
     buildType(Build)
 }
 
@@ -58,4 +58,8 @@ object Build : BuildType({
         perfmon {
         }
     }
+})
+
+object SettingsForProject: GitVcsRoot({
+    name = DslContext.getParameter("VersionNumber")
 })
